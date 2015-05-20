@@ -59,6 +59,7 @@ THIRD_PARTY_APPS = ('adminsortable', "django_rq",)
 INTERNAL_APPS = (
 	'munkimanager', 
   'syncthingmanager',
+  'academics',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + INTERNAL_APPS
