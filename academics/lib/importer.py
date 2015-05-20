@@ -17,15 +17,12 @@ def importPermRecs(permRecFile):
   }
   
   ksAllStudentIDs = set([d['IDSTUDENT'] for d in data])
-  seenStudentIDs = set()
   
   changedCount = 0
   
   with transaction.atomic():
     #New and updated records
     for ksRecord in data:
-      seenStudentIDs.add(ksRecord['IDSTUDENT'])
-      
       changed = False
       
       try:
@@ -50,7 +47,7 @@ def importPermRecs(permRecFile):
         tmObject.save()
     
     #Extra records
-    extraRecords = StudentPermRec.objects.exclude(student_id__in=seenStudentIDs)
+    extraRecords = StudentPermRec.objects.exclude(student_id__in=ksAllStudentIDs)
     for record in extraRecords:
       logger.warn("Removing student perm rec record {id} with student id {student_id}".format(id=record.id, student_id=record.student_id))
       record.delete()
